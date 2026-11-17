@@ -50,9 +50,9 @@ Exemplo de corpo do POST/PUT:
 }
 ```
 
-- `titulo` e `responsavel` são obrigatórios; `status` aceita `PENDENTE`, `EM_ANDAMENTO` ou `CONCLUIDA`; `prioridade` aceita `BAIXA`, `MEDIA` ou `ALTA`.
+- `titulo` e `responsavel` são obrigatórios; `status` aceita `PENDENTE`, `EM_ANDAMENTO` ou `CONCLUIDA` (padrão `PENDENTE`); `prioridade` aceita `BAIXA`, `MEDIA` ou `ALTA` (padrão `MEDIA`).
 - O PATCH recebe só `{ "status": "CONCLUIDA" }`.
-- Erro de validação: `400` com `{ "status": 400, "erros": ["O título é obrigatório", ...] }`. Id inexistente: `404` com `{ "status": 404, "mensagem": "Tarefa não encontrada" }`.
+- Erro de validação: `400` com `{ "status": 400, "erros": ["O título é obrigatório", ...] }`. JSON mal formado ou id que não é número também dão `400`. Id inexistente: `404` com `{ "status": 404, "mensagem": "Tarefa não encontrada" }`.
 
 ## Pré-requisitos
 
@@ -108,7 +108,7 @@ npx expo start
 ## Testes
 
 ```bash
-cd backend && ./mvnw test          # 8 testes das rotas da API (MockMvc)
+cd backend && ./mvnw test          # 10 testes das rotas da API (MockMvc)
 cd frontend-web && npm test        # listagem, filtro e mensagens de validação
 cd frontend-mobile && npx tsc --noEmit   # checagem de tipos do app
 ```

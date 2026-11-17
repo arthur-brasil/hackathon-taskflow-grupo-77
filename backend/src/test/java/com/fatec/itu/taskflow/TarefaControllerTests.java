@@ -96,4 +96,23 @@ class TarefaControllerTests {
         mvc.perform(delete("/api/tarefas/4"))
            .andExpect(status().isNotFound());
     }
+
+    @Test
+    void usaPendenteEMediaQuandoStatusEPrioridadeNaoVem() throws Exception {
+        mvc.perform(post("/api/tarefas").contentType(MediaType.APPLICATION_JSON)
+                                        .content("{\"titulo\": \"Só obrigatórios\", \"responsavel\": \"Ana\"}"))
+           .andExpect(status().isCreated())
+           .andExpect(jsonPath("$.status").value("PENDENTE"))
+           .andExpect(jsonPath("$.prioridade").value("MEDIA"));
+    }
+
+    @Test
+    void devolve400LimpoParaJsonInvalidoEIdQueNaoEhNumero() throws Exception {
+        mvc.perform(post("/api/tarefas").contentType(MediaType.APPLICATION_JSON).content("{\"titulo\":"))
+           .andExpect(status().isBadRequest())
+           .andExpect(jsonPath("$.erros[0]").value("O corpo da requisição deve ser um JSON válido"));
+        mvc.perform(get("/api/tarefas/abc"))
+           .andExpect(status().isBadRequest())
+           .andExpect(jsonPath("$.erros[0]").value("O id deve ser um número"));
+    }
 }
