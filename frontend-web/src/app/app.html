@@ -1,0 +1,15 @@
+<header>
+  <h1>TaskFlow</h1>
+  <button type="button" class="secundario" (click)="carregar()">Atualizar</button>
+</header>
+
+<main>
+  @if (erro()) {
+    <p class="alerta erro">{{ erro() }}</p>
+  }
+
+  <section>
+    <h2>Tarefas</h2>
+    <app-tarefa-lista [tarefas]="tarefas()" />
+  </section>
+</main>
