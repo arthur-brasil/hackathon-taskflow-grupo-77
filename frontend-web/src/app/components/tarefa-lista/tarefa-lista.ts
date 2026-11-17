@@ -1,4 +1,4 @@
-import { Component, computed, input, signal } from '@angular/core';
+import { Component, computed, input, output, signal } from '@angular/core';
 
 import { PRIORIDADES, STATUS, Status, Tarefa } from '../../models/tarefa';
 
@@ -9,9 +9,19 @@ import { PRIORIDADES, STATUS, Status, Tarefa } from '../../models/tarefa';
 })
 export class TarefaLista {
   readonly tarefas = input.required<Tarefa[]>();
+  readonly editar = output<Tarefa>();
+  readonly excluir = output<Tarefa>();
 
   protected readonly status = STATUS;
   protected readonly filtro = signal<Status | 'TODAS'>('TODAS');
+
+  // Id da tarefa que está pedindo confirmação de exclusão
+  protected readonly confirmando = signal<number | null>(null);
+
+  protected confirmarExclusao(t: Tarefa): void {
+    this.confirmando.set(null);
+    this.excluir.emit(t);
+  }
 
   // Lista que aparece na tela, já filtrada pelo status escolhido
   protected readonly visiveis = computed(() => {

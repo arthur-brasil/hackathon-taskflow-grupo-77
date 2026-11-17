@@ -64,6 +64,32 @@ td small {
   padding: 24px;
 }
 
+.acoes {
+  white-space: nowrap;
+  text-align: right;
+}
+
+.acoes button {
+  font: inherit;
+  font-size: 13px;
+  padding: 4px 10px;
+  margin-left: 4px;
+  border-radius: 6px;
+  border: 1px solid #d0d5dd;
+  background: #fff;
+  cursor: pointer;
+}
+
+.acoes .perigo-leve {
+  color: #b42318;
+}
+
+.acoes .perigo {
+  background: #b42318;
+  border-color: #b42318;
+  color: #fff;
+}
+
 .status,
 .prioridade {
   display: inline-block;

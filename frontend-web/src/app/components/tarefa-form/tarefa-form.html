@@ -1,0 +1,49 @@
+<form (ngSubmit)="enviar()">
+  <div class="campo largo">
+    <label for="titulo">Título *</label>
+    <input id="titulo" name="titulo" [(ngModel)]="form.titulo" placeholder="Ex.: Criar tela de login" />
+  </div>
+
+  <div class="campo">
+    <label for="responsavel">Responsável *</label>
+    <input id="responsavel" name="responsavel" [(ngModel)]="form.responsavel" placeholder="Nome" />
+  </div>
+
+  <div class="campo largo">
+    <label for="descricao">Descrição</label>
+    <textarea id="descricao" name="descricao" rows="2" [(ngModel)]="form.descricao" placeholder="Opcional"></textarea>
+  </div>
+
+  <div class="campo">
+    <label for="status">Status</label>
+    <select id="status" name="status" [(ngModel)]="form.status">
+      @for (s of status; track s.valor) {
+        <option [value]="s.valor">{{ s.rotulo }}</option>
+      }
+    </select>
+  </div>
+
+  <div class="campo">
+    <label for="prioridade">Prioridade</label>
+    <select id="prioridade" name="prioridade" [(ngModel)]="form.prioridade">
+      @for (p of prioridades; track p.valor) {
+        <option [value]="p.valor">{{ p.rotulo }}</option>
+      }
+    </select>
+  </div>
+
+  @if (erros().length) {
+    <ul class="erros largo">
+      @for (e of erros(); track e) {
+        <li>{{ e }}</li>
+      }
+    </ul>
+  }
+
+  <div class="acoes largo">
+    <button type="submit" class="primario">{{ tarefa() ? 'Salvar alterações' : 'Cadastrar tarefa' }}</button>
+    @if (tarefa()) {
+      <button type="button" (click)="limpar()">Cancelar edição</button>
+    }
+  </div>
+</form>

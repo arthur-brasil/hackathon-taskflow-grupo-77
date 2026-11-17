@@ -17,6 +17,7 @@
       <th>Responsável</th>
       <th>Prioridade</th>
       <th>Status</th>
+      <th class="acoes">Ações</th>
     </tr>
   </thead>
   <tbody>
@@ -32,10 +33,19 @@
         <td>{{ t.responsavel }}</td>
         <td><span class="prioridade" [attr.data-prioridade]="t.prioridade">{{ rotuloPrioridade(t.prioridade) }}</span></td>
         <td><span class="status" [attr.data-status]="t.status">{{ rotuloStatus(t.status) }}</span></td>
+        <td class="acoes">
+          @if (confirmando() === t.id) {
+            <button type="button" class="perigo" (click)="confirmarExclusao(t)">Confirmar exclusão</button>
+            <button type="button" (click)="confirmando.set(null)">Não</button>
+          } @else {
+            <button type="button" (click)="editar.emit(t)">Editar</button>
+            <button type="button" class="perigo-leve" (click)="confirmando.set(t.id)">Excluir</button>
+          }
+        </td>
       </tr>
     } @empty {
       <tr>
-        <td colspan="5" class="vazio">Nenhuma tarefa com esse status.</td>
+        <td colspan="6" class="vazio">Nenhuma tarefa com esse status.</td>
       </tr>
     }
   </tbody>
