@@ -17,11 +17,11 @@ public record TarefaRequestDTO(
     @Size(max = 100, message = "O responsável deve ter no máximo 100 caracteres")
     String responsavel,
 
-    @NotBlank(message = "O status é obrigatório")
+    // Opcional: se não vier, a tarefa entra como PENDENTE
     @Pattern(regexp = "PENDENTE|EM_ANDAMENTO|CONCLUIDA", message = "O status deve ser PENDENTE, EM_ANDAMENTO ou CONCLUIDA")
     String status,
 
-    @NotBlank(message = "A prioridade é obrigatória")
+    // Opcional: se não vier, a tarefa entra como MEDIA
     @Pattern(regexp = "BAIXA|MEDIA|ALTA", message = "A prioridade deve ser BAIXA, MEDIA ou ALTA")
     String prioridade
 ) {

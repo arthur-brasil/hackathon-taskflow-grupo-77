@@ -11,8 +11,8 @@ public class TarefaMapper {
         t.setTitulo(request.titulo());
         t.setDescricao(request.descricao());
         t.setResponsavel(request.responsavel());
-        t.setStatus(request.status());
-        t.setPrioridade(request.prioridade());
+        t.setStatus(request.status() != null ? request.status() : "PENDENTE");
+        t.setPrioridade(request.prioridade() != null ? request.prioridade() : "MEDIA");
 
         return t;
     }
