@@ -1,0 +1,52 @@
+<div class="filtros" role="group" aria-label="Filtrar por status">
+  <button type="button" [class.ativo]="filtro() === 'TODAS'" (click)="filtro.set('TODAS')">
+    Todas <span class="contagem">{{ quantidade('TODAS') }}</span>
+  </button>
+  @for (s of status; track s.valor) {
+    <button type="button" [class.ativo]="filtro() === s.valor" (click)="filtro.set(s.valor)">
+      {{ s.rotulo }} <span class="contagem">{{ quantidade(s.valor) }}</span>
+    </button>
+  }
+</div>
+
+<table>
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Título</th>
+      <th>Responsável</th>
+      <th>Prioridade</th>
+      <th>Status</th>
+      <th class="acoes">Ações</th>
+    </tr>
+  </thead>
+  <tbody>
+    @for (t of visiveis(); track t.id) {
+      <tr>
+        <td class="id">{{ t.id }}</td>
+        <td>
+          <strong>{{ t.titulo }}</strong>
+          @if (t.descricao) {
+            <small>{{ t.descricao }}</small>
+          }
+        </td>
+        <td>{{ t.responsavel }}</td>
+        <td><span class="prioridade" [attr.data-prioridade]="t.prioridade">{{ rotuloPrioridade(t.prioridade) }}</span></td>
+        <td><span class="status" [attr.data-status]="t.status">{{ rotuloStatus(t.status) }}</span></td>
+        <td class="acoes">
+          @if (confirmando() === t.id) {
+            <button type="button" class="perigo" (click)="confirmarExclusao(t)">Confirmar exclusão</button>
+            <button type="button" (click)="confirmando.set(null)">Não</button>
+          } @else {
+            <button type="button" (click)="editar.emit(t)">Editar</button>
+            <button type="button" class="perigo-leve" (click)="confirmando.set(t.id)">Excluir</button>
+          }
+        </td>
+      </tr>
+    } @empty {
+      <tr>
+        <td colspan="6" class="vazio">Nenhuma tarefa com esse status.</td>
+      </tr>
+    }
+  </tbody>
+</table>

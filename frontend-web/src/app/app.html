@@ -1,0 +1,30 @@
+<header>
+  <h1>TaskFlow</h1>
+  <button type="button" class="secundario" (click)="carregar()">Atualizar</button>
+</header>
+
+<main>
+  @if (erro()) {
+    <p class="alerta erro">{{ erro() }}</p>
+  }
+  @if (mensagem()) {
+    <p class="alerta sucesso">{{ mensagem() }}</p>
+  }
+
+  <section>
+    <h2>{{ emEdicao() ? 'Editar tarefa #' + emEdicao()!.id : 'Nova tarefa' }}</h2>
+    <app-tarefa-form
+      [tarefa]="emEdicao()"
+      [erros]="errosForm()"
+      (salvar)="salvar($event)"
+      (cancelar)="cancelarEdicao()" />
+  </section>
+
+  <section>
+    <h2>Tarefas</h2>
+    <app-tarefa-lista
+      [tarefas]="tarefas()"
+      (editar)="editar($event)"
+      (excluir)="excluir($event)" />
+  </section>
+</main>
