@@ -1,6 +1,6 @@
 import { Platform } from 'react-native';
 
-import { Tarefa } from '../types/tarefa';
+import { Status, Tarefa } from '../types/tarefa';
 
 // No celular, "localhost" é o próprio celular: use o IP do computador na rede,
 // colocando EXPO_PUBLIC_API_URL=http://SEU_IP:8080 no arquivo .env (veja o .env.example).
@@ -26,4 +26,15 @@ export async function listarTarefas(): Promise<Tarefa[]> {
 export async function buscarTarefa(id: number): Promise<Tarefa> {
   const resposta = await verificar(await fetch(`${API_URL}/${id}`));
   return resposta.json();
+}
+
+// PATCH /api/tarefas/{id}/status — a API responde 204 sem corpo
+export async function alterarStatus(id: number, status: Status): Promise<void> {
+  await verificar(
+    await fetch(`${API_URL}/${id}/status`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ status }),
+    })
+  );
 }
